@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento não concluído - SELVA COMBAT</title>
+  <style>
+    body{margin:0;font-family:Arial;background:#0a0a0a;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+    .box{max-width:700px;width:100%;background:#141414;border:1px solid #2a2a2a;border-radius:24px;padding:32px;text-align:center}
+    h1{margin-top:0;color:#f1c86a}
+    p{color:#d1c7b0;line-height:1.5}
+    a{display:inline-block;margin-top:16px;padding:12px 18px;border-radius:14px;background:#f1c86a;color:#111;text-decoration:none;font-weight:900}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Pagamento não concluído</h1>
+    <p>Seu pedido foi registrado, mas o pagamento não foi concluído.</p>
+    <a href="./index.html">Voltar para a loja</a>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = "COLE_AQUI_SUA_URL_DO_APPS_SCRIPT";
+    const params = new URLSearchParams(window.location.search);
+    const idPedido = params.get("id_pedido") || "";
+
+    if (idPedido) {
+      fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "atualizarStatus",
+          idPedido: idPedido,
+          statusPagamento: "Falhou",
+          statusPedido: "Pagamento não concluído"
+        })
+      }).catch(console.error);
+    }
+  </script>
+</body>
+</html>
